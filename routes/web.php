@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TelegramBotController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/updated-activity', [TelegramBotController::class, 'updatedActivity']);
+Route::post('/send-message', [TelegramBotController::class, 'storeMessage']);
+Route::post('/bot-update', [TelegramBotController::class, 'botUpdate'])->name('update');;
