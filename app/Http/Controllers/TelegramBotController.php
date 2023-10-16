@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Service\TelegramCommandHandler;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 class TelegramBotController extends Controller
 {
+    private  $TelegramCommandService;
+    public function __construct()
+    {
+        $this->TelegramCommandService = new TelegramCommandHandler;
+    }
     public function updatedActivity()
     {
-        $activity = Telegram::getUpdates();
-        dd($activity);
+        $message = "/start";
+        $this->TelegramCommandService->commandChecker($message);
     }
     public function storeMessage(Request $request)
     {
@@ -32,6 +39,15 @@ class TelegramBotController extends Controller
        dd("Successfully Send Message");
     }
     public function botUpdate(Request $request){
+
+        Log::debug($request);
+        $msg = $request['message']['text'];
+        if($this->TelegramCommandService->commandChecker($msg)){
+
+        }else{
+
+        }
+
         Telegram::sendMessage([
             'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
             'parse_mode' => 'HTML',

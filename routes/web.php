@@ -18,6 +18,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+# Telegram bot routes
+
 Route::get('/updated-activity', [TelegramBotController::class, 'updatedActivity']);
 Route::post('/send-message', [TelegramBotController::class, 'storeMessage']);
-Route::post('/bot-update', [TelegramBotController::class, 'botUpdate'])->name('update');;
+Route::post('/bot-update', [TelegramBotController::class, 'botUpdate'])->name('update');
+
+# Ticktick API routes
+Route::get('/ticktick-auth', [TelegramBotController::class, 'updatedActivity']);
+
