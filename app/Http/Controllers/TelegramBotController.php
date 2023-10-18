@@ -17,8 +17,24 @@ class TelegramBotController extends Controller
     }
     public function updatedActivity()
     {
-        $message = "/start";
-        $this->TelegramCommandService->commandChecker($message);
+      //  $message = "/start";
+      //  $this->TelegramCommandService->commandChecker($message);
+       $markUp = json_encode([
+        'inline_keyboard'=> [
+            [
+                [
+                    "text" =>'Task 02',
+                    "callback_data" => 'test'
+                ],
+            ]
+        ],
+
+        ]);
+        Telegram::sendMessage([
+            'chat_id' => 5652436443,
+            'text' => "Ting Ting",
+            'reply_markup'=> $markUp,
+        ]);
     }
     public function storeMessage(Request $request)
     {
@@ -49,10 +65,22 @@ class TelegramBotController extends Controller
                 'text' => $reply
             ]);
         }else{
+            $message = 'Testing';
             Telegram::sendMessage([
                 'chat_id' => $request['message']['from']['id'],
-                'parse_mode' => 'HTML',
-                'text' => "Message received"
+                'text' => $message,
+                'reply_markup'=> [
+                    'inline_keyboard'=> [
+                        [
+                           [
+                                "text" =>'Task 01',
+                                "url" => 'http://www.task.com',
+                                "pay" => false,
+                           ],
+                        ]
+                    ],
+                ],
+
             ]);
 
         }
