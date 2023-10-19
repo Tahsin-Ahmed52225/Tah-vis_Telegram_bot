@@ -13,9 +13,10 @@ class CommonService {
 
     static public function handle($update){
       if(Session::has("module")){
-        switch(Session::get("module")){
-            case ""
-        }
+        Telegram::sendMessage([
+            'chat_id' => $update->message->chat->id,
+            'text' => 'Task module working on...',
+        ]);
       }else{
         Telegram::sendMessage([
             'chat_id' => $update->message->chat->id,
