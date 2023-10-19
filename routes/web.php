@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TelegramBotController;
+use App\Service\CommonService;
 use Illuminate\Support\Facades\Route;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
@@ -22,10 +23,11 @@ Route::get('/', function () {
 # Telegram bot routes
 Route::post('/webhook', function () {
     $update = Telegram::commandsHandler(true);
-
-    // Commands handler method returns the Update object.
-    // So you can further process $update object
-    // to however you want.
+   # handles if it isn't a bot command
+   if(!isset($update->entiites)){
+    return CommonService::handle($update);
+   }
+    return $update;
 });
 
 # Ticktick API routes

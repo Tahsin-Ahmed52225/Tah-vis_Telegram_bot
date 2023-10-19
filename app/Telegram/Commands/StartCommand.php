@@ -3,7 +3,6 @@
 namespace App\Telegram\Commands;
 
 use App\Models\TeleUser;
-use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
 
@@ -14,7 +13,6 @@ class StartCommand extends Command
 
     public function handle()
     {
-        $this->replyWithChatAction(['action' => Actions::TYPING]);
         $this->replyWithMessage([
             'text' => $this->teleUserManagement($this->getUpdate()),
         ]);
