@@ -32,7 +32,7 @@ class TeleUser extends Model
         ]);
     }
     static public function findTeleUserByClientId( string $clientID){
-        $user = TeleUser::where('client_id', $clientID)->get();
+        $user = TeleUser::where('client_id', $clientID)->first();
         return $user;
     }
 }

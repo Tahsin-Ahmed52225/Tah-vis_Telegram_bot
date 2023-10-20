@@ -129,7 +129,6 @@ return [
     |
     */
     'commands' => [
-        HelpCommand::class,
         App\Telegram\Commands\StartCommand::class,
         App\Telegram\Commands\TaskCommand::class,
     ],

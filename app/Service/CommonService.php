@@ -12,6 +12,13 @@ class CommonService {
 
 
     static public function handle($update){
+
+
+
+    Telegram::sendMessage([
+        'chat_id' => $update->message->chat->id,
+        'text' => Session::has("module"),
+    ]);
       if(Session::has("module")){
         Telegram::sendMessage([
             'chat_id' => $update->message->chat->id,

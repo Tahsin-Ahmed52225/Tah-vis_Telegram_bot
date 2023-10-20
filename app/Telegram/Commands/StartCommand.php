@@ -31,7 +31,7 @@ class StartCommand extends Command
     private function teleUserManagement($request){
         $clientID = $request['message']['from']['id'];
         $user = TeleUser::findTeleUserByClientId($clientID);
-        if(count($user) != 0){
+        if($user){
             return "Welcome back ".$request['message']['from']['first_name'];
 
         }else{

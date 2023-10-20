@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('client_id');
             $table->string('mobile_no')->nullable();
+            $table->string('state')->nullable();
             $table->timestamps();
         });
     }
