@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TeleUser extends Model
 {
@@ -23,7 +24,8 @@ class TeleUser extends Model
         'client_id',
     ];
 
-    static public function store(array $request){
+    static public function store(array $request) :object
+    {
         return TeleUser::create([
             'first_name' => $request["first_name"] ?? '',
             'last_name' => $request["last_name"] ?? '',
@@ -31,8 +33,14 @@ class TeleUser extends Model
             'mobile_no' => isset($request["contact"]) ? $request["contact"]['phone_number'] : null,
         ]);
     }
-    static public function findTeleUserByClientId( string $clientID){
+    static public function findTeleUserByClientId(string $clientID) :object|null
+    {
         $user = TeleUser::where('client_id', $clientID)->first();
         return $user;
+    }
+
+    public function task()
+    {
+        return $this->hasMany(Task::class);
     }
 }

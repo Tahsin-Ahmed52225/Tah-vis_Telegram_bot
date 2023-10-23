@@ -4,6 +4,7 @@ namespace App\Telegram\Commands;
 
 use App\Service\CommonService;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Keyboard\Keyboard;
@@ -53,7 +54,9 @@ class TaskCommand extends Command
                     [
                         [
                             "text" => "View All",
-                            "callback_data" => "task-all"
+                            "web_app" => [
+                                "url"=> env('TELEGEAM_WEBAPP_URL'),
+                            ]
                         ],
                     ]
                 ]
