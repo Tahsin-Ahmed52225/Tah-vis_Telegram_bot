@@ -7,37 +7,35 @@ use App\Models\TeleUser;
 use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
-class TaskTextHandler {
-     public function handle($action , $update){
-        $Func = str_replace("-","",$action->state);
-        $this->{$Func}($action->id , $update);
+class TaskTextHandler
+{
+    public function handle($action, $update)
+    {
+        $Func = str_replace("-", "", $action->state);
+        $this->{$Func}($action->id, $update);
     }
 
-    private function taskadd($id,$update){
+    private function taskadd($id, $update)
+    {
 
         $task = Task::store($id, $update->message->text);
-        if($task){
+        if ($task) {
             Telegram::sendMessage([
                 'chat_id' => $update->message->from->id,
                 'text' => "Task Added Successfully.",
             ]);
-
-        }else{ 
+            TeleUser::where(['client_id' => $update->message->from->id])->update(['state' => '']);
+        } else {
             Telegram::sendMessage([
                 'chat_id' => $update->message->from->id,
                 'text' => "Something went wrong.",
             ]);
-
         }
-
     }
-    private function taskdelete(){
-
+    private function taskdelete()
+    {
     }
-    private function taskedit(){
-
-    }
-    private function taskview(){
-
+    private function taskedit()
+    {
     }
 }

@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TeleUser extends Model
 {
@@ -24,6 +23,8 @@ class TeleUser extends Model
         'client_id',
     ];
 
+
+
     static public function store(array $request) :object
     {
         return TeleUser::create([
@@ -39,7 +40,7 @@ class TeleUser extends Model
         return $user;
     }
 
-    public function task()
+    public function tasks()
     {
         return $this->hasMany(Task::class);
     }

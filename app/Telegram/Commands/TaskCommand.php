@@ -15,24 +15,23 @@ class TaskCommand extends Command
     protected string $name = 'task';
     protected string $description = 'Task Management';
     private $taskService = [
-        ['View Task','Task-all'],
-        ['Add Task','Task-add'],
-        ['Delete Task','Task-delete']
+        ['View Task', 'Task-all'],
+        ['Add Task', 'Task-add'],
+        ['Delete Task', 'Task-delete']
     ];
     protected string $pattern = '{taskAction}';
 
     public function handle()
     {
         $taskAction = $this->argument('taskAction');
-        if ($taskAction){
-
-        }else{
+        if ($taskAction) {
+        } else {
             $updateData = $this->getUpdate();
             $this->replyWithChatAction(['action' => Actions::TYPING]);
             $this->replyWithMessage([
                 'text' =>  "Welcome to Task management",
             ]);
-            foreach($this->taskService as $taskOption){
+            foreach ($this->taskService as $taskOption) {
                 $keyboard[] = [$taskOption];
             }
             $keyboard = json_encode([
@@ -55,7 +54,7 @@ class TaskCommand extends Command
                         [
                             "text" => "View All",
                             "web_app" => [
-                                "url"=> env('TELEGEAM_WEBAPP_URL'),
+                                "url" => env('TELEGEAM_WEBAPP_URL'),
                             ]
                         ],
                     ]
@@ -64,11 +63,8 @@ class TaskCommand extends Command
             Telegram::sendMessage([
                 'chat_id' => $updateData->message->chat->id,
                 'text' => "Choose option...",
-                'reply_markup'=> $keyboard,
+                'reply_markup' => $keyboard,
             ]);
-
         }
-
-
     }
 }

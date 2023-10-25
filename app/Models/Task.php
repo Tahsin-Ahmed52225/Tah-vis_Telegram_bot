@@ -16,6 +16,10 @@ class Task extends Model
         'tele_user_id',
     ];
 
+    protected $cast = [
+        'complete' => 'boolean',
+    ];
+
     static function store($id, $data){
         return Task::create([
             'tele_user_id' => $id,

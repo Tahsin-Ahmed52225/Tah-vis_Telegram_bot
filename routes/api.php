@@ -20,3 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/view-tasks', [WebAppController::class, 'getTasks']);
+
+Route::put('/task', [WebAppController::class, 'updateTask']);
