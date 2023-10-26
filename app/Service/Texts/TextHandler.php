@@ -13,19 +13,16 @@ class TextHandler
     static public function handle($update)
     {
         $user = TeleUser::findTeleUserByClientId($update->message->from->id);
-        if ($user) {
+        if ($user->state) {
             $state = explode('-', $user->state);
             switch ($state[0]) {
                 case 'task':
                     $handlerObj = new TaskTextHandler;
+                    $handlerObj->handle($user, $update);
                     break;
             }
-            $handlerObj->handle($user, $update);
         } else {
-            Telegram::sendMessage([
-                'chat_id' => $update->message->from->id,
-                'text' => "No module activated.",
-            ]);
+            BotResponse($update->message->from->id, "No module activated.");
         }
     }
 }

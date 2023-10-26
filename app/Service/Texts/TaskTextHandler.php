@@ -4,38 +4,45 @@ namespace App\Service\Texts;
 
 use App\Models\Task;
 use App\Models\TeleUser;
-use Illuminate\Support\Facades\Log;
-use Telegram\Bot\Laravel\Facades\Telegram;
 
 class TaskTextHandler
 {
-    public function handle($action, $update)
+    public function handle($user, $update)
     {
-        $Func = str_replace("-", "", $action->state);
-        $this->{$Func}($action->id, $update);
+        $Func = explode('-', $user->state);
+        $this->{$Func[0] . $Func[1]}($user->id, $update, $user->state);
     }
 
-    private function taskadd($id, $update)
+    private function taskadd($id, $update, $optional = null)
     {
 
         $task = Task::store($id, $update->message->text);
+
         if ($task) {
-            Telegram::sendMessage([
-                'chat_id' => $update->message->from->id,
-                'text' => "Task Added Successfully.",
-            ]);
+            BotResponse($update->message->from->id, "Task Added Successfully.");
             TeleUser::where(['client_id' => $update->message->from->id])->update(['state' => '']);
         } else {
-            Telegram::sendMessage([
-                'chat_id' => $update->message->from->id,
-                'text' => "Something went wrong.",
-            ]);
+            BotResponse($update->message->from->id, 'Something went wrong.');
         }
     }
-    private function taskdelete()
+    private function taskdelete($id, $update, $optional = null)
     {
-    }
-    private function taskedit()
-    {
+
+        $pattern = '/^[0-9]+$/';
+        // Only numbers are allowed
+        if (preg_match($pattern, $update->message->text)) {
+            $inputOption = (int)$update->message->text + 1;
+            $taskListIndex = explode('-', $optional);
+            // Only numbers withhin the task list are allowed
+            if ($inputOption <= count($taskListIndex) - 1) {
+                Task::destroy($taskListIndex[$inputOption]);
+                BotResponse($update->message->from->id, 'Task deleted succcesfully.');
+                TeleUser::where(['client_id' => $update->message->from->id])->update(['state' => '']);
+            } else {
+                BotResponse($update->message->from->id, "Wrong Input Try Again!");
+            }
+        } else {
+            BotResponse($update->message->from->id, "Wrong Input Try Again!");
+        }
     }
 }

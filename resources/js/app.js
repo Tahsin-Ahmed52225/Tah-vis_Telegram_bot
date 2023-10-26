@@ -7,7 +7,7 @@
 import './bootstrap';
 import { createApp } from 'vue';
 
-axios.defaults.baseURL = 'http://localhost:8000/api/';
+axios.defaults.baseURL = `https://099c-203-76-123-69.ngrok-free.app`+`/api/`;
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin

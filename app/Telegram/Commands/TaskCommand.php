@@ -2,12 +2,9 @@
 
 namespace App\Telegram\Commands;
 
-use App\Service\CommonService;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
+
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
-use Telegram\Bot\Keyboard\Keyboard;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 class TaskCommand extends Command
@@ -40,10 +37,6 @@ class TaskCommand extends Command
                         [
                             "text" => "Add",
                             "callback_data" => "task-add"
-                        ],
-                        [
-                            "text" => "Edit",
-                            "callback_data" => "task-edit"
                         ],
                         [
                             "text" => "Delete",

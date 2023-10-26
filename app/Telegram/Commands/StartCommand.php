@@ -28,16 +28,16 @@ class StartCommand extends Command
         ]);
     }
 
-    private function teleUserManagement($request){
+    private function teleUserManagement($request)
+    {
         $clientID = $request['message']['from']['id'];
         $user = TeleUser::findTeleUserByClientId($clientID);
-        if($user){
-            return "Welcome back ".$request['message']['from']['first_name'];
-
-        }else{
-            TeleUser::store($request['message']['from']);
-            return "Hello ".$request['message']['from']['first_name']. " How can I help you?";
-
+        if ($user) {
+            return "Welcome back " . $request['message']['from']['first_name'];
+        } else {
+            $user = TeleUser::store($request['message']['from']);
+            return "Hello " . $request['message']['from']['first_name'] . " How can I help you?";
         }
+        TeleUser::where(['client_id' => $user->client_id])->update(['state' => '']);
     }
 }

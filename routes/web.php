@@ -21,9 +21,6 @@ Route::get('/', function () {
 
 # Telegram bot routes
 Route::post('/webhook', [BotController::class, 'botHandler']);
-# Task webview routes
-Route::get('/view-tasks', [BotController::class, 'botHandler']);
 
 # Ticktick API routes
 Route::get('/ticktick-auth', [TelegramBotController::class, 'updatedActivity']);
-
