@@ -44,5 +44,6 @@ class StartCommand extends Command
             $user = TeleUser::store($request['message']['from']);
             return "Hello " . $request['message']['from']['first_name'] . " How can I help you?";
         }
+        TeleUser::where(['client_id' => $user->client_id])->update(['state' => '']);
     }
 }
