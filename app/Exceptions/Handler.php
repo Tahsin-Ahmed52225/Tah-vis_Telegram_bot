@@ -19,6 +19,30 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
+     */
+    public function render($request, Throwable $e)
+    {
+        switch (true) {
+            case $e instanceof TelegramBotException:
+                // $response = json_decode($e->getMessage());
+                // $jsonResponse = response()->json($response, $response->status_code);
+
+                // throw new HttpResponseException($jsonResponse);
+                break;
+            case $e instanceof WebAppException:
+            default:
+                return parent::render($request, $e);
+        }
+    }
+
+    /**
      * Register the exception handling callbacks for the application.
      */
     public function register(): void

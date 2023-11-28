@@ -37,9 +37,7 @@ return [
             'certificate_path' => env('TELEGRAM_CERTIFICATE_PATH', ''),
             'webhook_url' => env('TELEGRAM_WEBHOOK_URL', ''),
             'commands' => [
-                // Acme\Project\Commands\MyTelegramBot\BotCommand::class
                 App\Telegram\Commands\StartCommand::class,
-
             ],
         ],
 
@@ -129,7 +127,6 @@ return [
     |
     */
     'commands' => [
-        HelpCommand::class,
         App\Telegram\Commands\StartCommand::class,
         App\Telegram\Commands\TaskCommand::class,
     ],
@@ -192,8 +189,7 @@ return [
                 'status', // Shared Command Name.
                 'Acme\Project\Commands\BotCommand' // Full Path to Command Class.
            ],
-        */
-    ],
+        */],
 
     /*
     |--------------------------------------------------------------------------
